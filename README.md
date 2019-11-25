@@ -9,12 +9,7 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 
 ## Configuration Process
 
-Boot to the desktop and perform the following commands:
-
-
-
-
-
+Once youre Pi has booted.
 
 Open a command line window and run the following commands:
 
@@ -22,7 +17,6 @@ Open a command line window and run the following commands:
 `sudo apt-get update`
 
 `sudo apt-get dist-upgrade -y`
-
 
 # Turn off screen blanking
 
