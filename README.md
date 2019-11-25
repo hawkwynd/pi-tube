@@ -22,7 +22,7 @@ Open a command line window and run the following commands:
 
 `sudo nano /boot/cmdline.txt`
 
-Add `consoleblank=0` to turn screen blanking off completely, or edit it to set the number of seconds of inactivity before the console will blank. Note the kernel command line must be a single line of text.
+Add `consoleblank=0` at the end after `rootwait` to turn screen blanking off completely, or edit it to set the number of seconds of inactivity before the console will blank. Note the kernel command line must be a single line of text.
 
 # Install jq 
 jq is used to parse json array of data for bash shell processing.
