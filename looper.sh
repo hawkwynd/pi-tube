@@ -13,7 +13,7 @@ VIDEOPATH="video"
 # you can normally leave this alone
 SERVICE="cvlc"
 
-t="OmniTube v1.0"
+t="OmniTube v1.0 BETA"
 
 # now for our infinite loop!
 while true; do
