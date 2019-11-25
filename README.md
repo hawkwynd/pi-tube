@@ -22,6 +22,7 @@ Then create the configurations:
 
 
 `PI_UID=OC_OMNITUBE_1`
+
 `URL=http://34.193.150.151/pi_callHome.php?id=`
 
 Change `OC_OMNITUBE_1` to a unique identifier which you'll use in omniTube admin to register.
