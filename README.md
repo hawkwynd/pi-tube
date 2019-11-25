@@ -11,7 +11,20 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 
 Boot to the desktop and perform the following commands:
 
-# Turn off screen blank 
+
+
+
+
+
+Open a command line window and run the following commands:
+
+# Update all modules
+`sudo apt-get update`
+
+`sudo apt-get dist-upgrade -y`
+
+
+# Turn off screen blanking
 
 `sudo nano /boot/cmdline.txt`
 
