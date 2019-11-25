@@ -62,13 +62,9 @@ and let it run.
 
 ## The relationship Schema:
 A customer can have many campaigns.
+
 A campaign can have many clients.
+
 A client can have many videos. 
 
-
-
-
-
-
-
-
+## This README is a work in progress. Updates are coming.
