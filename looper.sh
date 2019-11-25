@@ -38,7 +38,7 @@ while true; do
         # color: 0xhex-value color HTML #000000 = black, #FF0000 = red, #00FF00 = green, #FFFF00 = yellow (red + green), #FFFFFF = white
         # opacity: 0=transparent 255=opaque (default)
 
-     	cvlc -ZfLq $VIDEOPATH --ignore-config --no-audio --no-random --no-video-title-show --sub-source="marq{marquee=$t %a %b %d %Y %l:%M:%S %P,color=0xFFFFFF,position=10,size=16,x=20,y=10}:logo{file=img/logo.png, position=6,x=10,opacity=100}"
+     	cvlc -ZfLq $VIDEOPATH --ignore-config --no-random --no-video-title-show --sub-source="marq{marquee=$t %a %b %d %Y %l:%M:%S %P,color=0xFFFFFF,position=10,size=16,x=20,y=10}:logo{file=img/logo.png, position=6,x=10,opacity=100}"
 
 	fi
 done
