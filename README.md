@@ -44,6 +44,22 @@ Enter the following information:
 Change `OC_OMNITUBE_1` to a unique identifier which you'll use in omniTube admin to register.
 The PI_UID must exist in the mysql database and be assigned to a client record, which is in turn assigned to a campaign, and assigned to a customer. 
 
+Save the file.
+
+
+## Run the fetch.sh
+
+From the pi-omnitube directory run:
+
+`bash fetch.sh` 
+
+and let it run. 
+
+`^c to abort the process` -- you may have to hit it several times quickly. 
+
+
+
+
 ## The relationship Schema:
 A customer can have many campaigns.
 A campaign can have many clients.
