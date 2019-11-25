@@ -37,4 +37,4 @@ do
 done
 
 # Run the looper script
-bash looper.sh
+# bash looper.sh

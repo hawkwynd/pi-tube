@@ -8,7 +8,7 @@
 #setterm -cursor off
 
 # set here the path to the directory containing your videos
-VIDEOPATH="/home/pi/projects/omnitube/video" 
+VIDEOPATH="video" 
 
 # you can normally leave this alone
 SERVICE="cvlc"

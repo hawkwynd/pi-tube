@@ -14,12 +14,22 @@ https://www.raspberrypi.org/downloads/
 https://www.raspberrypi.org/documentation/installation/noobs.md
 
 ## Configuration Process
-On the Pi login as pi, and in a command line window:
+On the Pi login as pi, and in a command line:
 
+# install jq
+`sudo apt-get install jq`
+
+# install youtube-dl
+`sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl`
+
+`sudo chmod a+rx /usr/local/bin/youtube-dl`
+
+
+
+# configure the environment
 `sudo vi /etc/environment` 
 
 Then create the configurations:
-
 
 `PI_UID=OC_OMNITUBE_1`
 
