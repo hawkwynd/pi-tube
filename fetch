@@ -6,6 +6,8 @@
 # -- Variables to use -- 
 source /home/pi/pi-tube/config.sh
 
+echo "Running Fetch Application - v1.2a.023 by Scott Fleming"
+
 echo "$TIMESTAMP Executing query for ${URL}${PI_UID}" > $fetchLog
 
 /usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o "/home/pi/pi-tube/json/file.json"
@@ -13,24 +15,39 @@ echo "$TIMESTAMP Executing query for ${URL}${PI_UID}" > $fetchLog
 # use jq to parse array of json and load into arr
 arr=( $(jq -r '.[].youtube_id' '/home/pi/pi-tube/json/file.json' ) )
 
-echo "$TIMESTAMP ${PI_UID} currently has ${#arr[@]} asset files to download." >> $fetchLog
 
 # clear vido directory of video files
-echo "$TIMESTAMP Clearning $VIDEOPATH directory..." >> $fetchLog
+# echo "$TIMESTAMP Clearning $VIDEOPATH directory..." >> $fetchLog
 
-rm $VIDEOPATH*
+# rm $VIDEOPATH*
 
 # iterate array and issue youtube-dl command for the id
 for i in "${!arr[@]}"
+  
   do
+
+    # compare if file exists, if not download it.
+    # ===========================================
+    
+    FILE=$VIDEOPATH${i}_${PI_UID}_${arr[$i]}.mp4
+    
+    echo "Checking $FILE..."
+
+    if [ ! -f "$FILE" ]; then
+        echo "$FILE does not exist" >> $fetchLog
+        echo "$TIMESTAMP ${PI_UID} currently has ${#arr[@]} asset files to download." >> $fetchLog
+	    echo "$TIMESTAMP Executing youtube-dl: ${i}_${PI_UID}_${arr[$i]}.mp4..." >> $fetchLog
+	    
+        youtube-dl --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${arr[$i]} -o $VIDEOPATH${i}_${PI_UID}_${arr[$i]}.mp4
+    
+    else
+        echo "$FILE exists, no youtube-dl required." > $fetchLog
+    fi
    
-	echo "$TIMESTAMP Executing youtube-dl: ${i}_${PI_UID}_${arr[$i]}.mp4..." >> $fetchLog
-	# --no-warnings --ignore-errors
-	/usr/bin/youtube-dl --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${arr[$i]} -o $VIDEOPATH${i}_${PI_UID}_${arr[$i]}.mp4
 
 done
 
-echo "$TIMESTAMP Executing vlc looper daemon..." >> $fetchlog
+echo "$TIMESTAMP Executing vlc looper daemon..." >> $fetchLog
 
 # Run the looper script
 exec /home/pi/pi-tube/looper 
