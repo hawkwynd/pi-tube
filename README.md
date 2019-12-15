@@ -9,30 +9,24 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 
 ## Configuration Process
 
-Once youre Pi has booted.
-
+Once your Pi has booted.
 Open a command line window and run the following commands:
 
-# Update all modules
+# Update all modules, and bring update Pi's base
+
 `sudo apt-get update`
 
 `sudo apt-get dist-upgrade -y`
 
-# Turn off screen blanking
-
-`sudo nano /boot/cmdline.txt`
-
-Add `consoleblank=0` at the end after `rootwait` to turn screen blanking off completely, or edit it to set the number of seconds of inactivity before the console will blank. Note the kernel command line must be a single line of text.
-
 # Install jq 
-jq is used to parse json array of data for bash shell processing.
+jq is used to parse json array of data for bash shell processing. REQUIRED
 
 `sudo apt-get install jq`
 
 # Install youtube-dl
 
 youtube-dl is the application which will download our video files from youtube.com and store
-them in the video directory as .mp4 format files. 
+them in the video directory as .mp4 format files. REQUIRED
 
 `sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl`
 
@@ -40,44 +34,3 @@ Then, set the following:
 
 `sudo chmod a+rx /usr/local/bin/youtube-dl`
 
-
-## Configure the environment of your PI
-We must set some environment variables in the PI:
-
-This creates the environment file which Pi will load on login/boot:
-
-`sudo vi /etc/environment` 
-
-Enter the following information:
-
-`PI_UID=OC_OMNITUBE_1` -- see below for important notes.
-
-`URL=http://34.193.150.151/pi_callHome.php?id=`
-
-Change `OC_OMNITUBE_1` to a unique identifier which you'll use in omniTube admin to register.
-The PI_UID must exist in the mysql database and be assigned to a client record, which is in turn assigned to a campaign, and assigned to a customer. 
-
-Save the file.
-
-
-## Run the fetch.sh
-
-From the pi-omnitube directory run:
-
-`bash fetch.sh` 
-
-and let it run. 
-
-`^c to abort the process` -- you may have to hit it several times quickly. 
-
-
-
-
-## The relationship Schema:
-A customer can have many campaigns.
-
-A campaign can have many clients.
-
-A client can have many videos. 
-
-## This README is a work in progress. Updates are coming.

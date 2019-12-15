@@ -20,13 +20,12 @@ source /home/pi/pi-tube/config.sh
         # x: horizontal spacing y: vertical spacing
         # color: 0xhex-value color HTML #000000 = black, #FF0000 = red, #00FF00 = green, #FFFF00 = yellow (red + green), #FFFFFF = white
         # opacity: 0=transparent 255=opaque (default)
-
+        # marquee optional date  formats %a %b %d %Y -- Sat Dec 14 2019 
+        # marquee optional time formats %l:%M:%S %p 10:34:21 PM 
+# ================================================================
+       
 echo "$TIMESTAMP Running cvlc $VIDEOPATH $TITLE" >> $fetchLog
 
+cvlc -ZLfqd $VIDEOPATH --no-video-title-show --no-random  --sub-source="marq{marquee=$TITLE $VERSION $AUTHOR %l:%M %p,color=0xFFFFFF,position=10,size=11,x=20,y=10}:logo{file=$LOGOPATH, position=6,x=10,opacity=100}"
 
-cvlc -ZLfqd $VIDEOPATH --no-video-title-show --no-random  --sub-source="marq{marquee=$TITLE %l:%M:%S %P,color=0xFFFFFF,position=10,size=11,x=20,y=10}:logo{file=$LOGOPATH, position=6,x=10,opacity=100}"
-
-# marquee optional date %a %b %d %Y -- Sat Dec 14 2019
-
-echo "$TIMESTAMP Looper is running as daemon and I'm done.">> $fetchLog
-
+exit 0;

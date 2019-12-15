@@ -1,25 +1,26 @@
 #!/usr/bin/env bash
 #=================================================================
-# OmniTube v1.2a.023.w -- Scott Fleming
+# OmniTube by Scott Fleming
 # scott@omnicommander.com
+# Video Display application 
 #=================================================================
 # -- Variables to use -- 
 source /home/pi/pi-tube/config.sh
 
 echo "Running Fetch Application - v1.2a.023 by Scott Fleming"
 
+# clear vido directory of video files
+echo "flushing video directory..."
+
+echo "$TIMESTAMP Clearning $VIDEOPATH directory..." >> $fetchLog
+rm $VIDEOPATH*
+
 echo "$TIMESTAMP Executing query for ${URL}${PI_UID}" > $fetchLog
 
-/usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o "/home/pi/pi-tube/json/file.json"
+/usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o $JSONPATH
 
 # use jq to parse array of json and load into arr
-arr=( $(jq -r '.[].youtube_id' '/home/pi/pi-tube/json/file.json' ) )
-
-
-# clear vido directory of video files
-# echo "$TIMESTAMP Clearning $VIDEOPATH directory..." >> $fetchLog
-
-# rm $VIDEOPATH*
+arr=( $(jq -r '.[].youtube_id' $JSONPATH ) )
 
 # iterate array and issue youtube-dl command for the id
 for i in "${!arr[@]}"
@@ -31,30 +32,25 @@ for i in "${!arr[@]}"
     
     FILE=$VIDEOPATH${i}_${PI_UID}_${arr[$i]}.mp4
     
-    echo "Checking $FILE..."
-
     if [ ! -f "$FILE" ]; then
-        echo "$FILE does not exist" >> $fetchLog
-        echo "$TIMESTAMP ${PI_UID} currently has ${#arr[@]} asset files to download." >> $fetchLog
+        
 	    echo "$TIMESTAMP Executing youtube-dl: ${i}_${PI_UID}_${arr[$i]}.mp4..." >> $fetchLog
 	    
+        # download our video
+        echo -ne " Executing youtube-dl: ${i}_${PI_UID}_${arr[$i]}.mp4...\r"
+
         youtube-dl --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${arr[$i]} -o $VIDEOPATH${i}_${PI_UID}_${arr[$i]}.mp4
     
     else
-        echo "$FILE exists, no youtube-dl required." > $fetchLog
+        echo "$FILE exists.. skipping"
+        echo "$TIMESTAMP $FILE exists, no youtube-dl required." >> $fetchLog
     fi
    
-
 done
 
-echo "$TIMESTAMP Executing vlc looper daemon..." >> $fetchLog
+echo "$TIMESTAMP run vlc" >> $fetchLog
 
 # Run the looper script
 exec /home/pi/pi-tube/looper 
 
-
-
-
-
-
-
+exit 0;
