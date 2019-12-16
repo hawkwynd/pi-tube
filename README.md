@@ -34,10 +34,17 @@ Then, set the following:
 
 `sudo chmod a+rx /usr/local/bin/youtube-dl`
 
-# VLC RUNS AS ROOT
-Next allow vlc to be run as sudo -- by default VLC complains like a dirty whore when we run it as root, 
-so we have to slap that bitch about to convince her to play nice and get on her knees when we tell her to.
+# Run VLC as SUDO
+Next allow vlc to be run as sudo -- by default VLC complains like a dirty whore when we run it as sudo, 
+so we have to slap that bitch about to convince her to play nice and run as sudo.
 
 `sudo sed -i 's/geteuid/getppid/' /usr/bin/vlc`
 
+# Desktop appearance settings
 
+## Disable the menu taskbar
+
+`nano ~/.config/lxsession/LXDE-pi/autostart`
+```#@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash```
