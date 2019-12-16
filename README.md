@@ -19,7 +19,7 @@ Open a command line window and run the following commands:
 `sudo apt-get dist-upgrade -y`
 
 # Install jq 
-jq is used to parse json array of data for bash shell processing. REQUIRED
+jq is used to parse json array of data for bash shell processing. `REQUIRED`
 
 `sudo apt-get install jq`
 
@@ -33,4 +33,11 @@ them in the video directory as .mp4 format files. REQUIRED
 Then, set the following:
 
 `sudo chmod a+rx /usr/local/bin/youtube-dl`
+
+# VLC RUNS AS ROOT
+Next allow vlc to be run as sudo -- by default VLC complains like a dirty whore when we run it as root, 
+so we have to slap that bitch about to convince her to play nice and get on her knees when we tell her to.
+
+`sudo sed -i 's/geteuid/getppid/' /usr/bin/vlc`
+
 
