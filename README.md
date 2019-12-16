@@ -45,6 +45,7 @@ so we have to slap that bitch about to convince her to play nice and run as sudo
 ## Disable the menu taskbar
 
 `nano ~/.config/lxsession/LXDE-pi/autostart`
-```#@lxpanel --profile LXDE-pi
+
+`#@lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
-@xscreensaver -no-splash```
+@xscreensaver -no-splash`
