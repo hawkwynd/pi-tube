@@ -42,10 +42,24 @@ so we have to slap that bitch about to convince her to play nice and run as sudo
 
 # Desktop appearance settings
 
+
 ## Disable the menu taskbar
 
 `nano ~/.config/lxsession/LXDE-pi/autostart`
 
+Comment out the first line of this file. If it doesn't exist, create the directories, and autostart file
+
 `#@lxpanel --profile LXDE-pi
+
 @pcmanfm --desktop --profile LXDE-pi
+
 @xscreensaver -no-splash`
+
+## Disable the cursor on desktop 
+
+`sudo vi /etc/lightdm/lightdm.conf`
+
+Uncomment the line and set xserver-command -nocursor
+
+`xserver-command=X -nocursor`
+
