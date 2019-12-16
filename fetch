@@ -4,23 +4,35 @@
 # scott@omnicommander.com
 # Video Display application 
 #=================================================================
-# -- Variables to use -- 
+
+# stop vlc if it's running or frozen
+pkill -9 vlc
+
+# Load our vairables to be used -- 
 source /home/pi/pi-tube/config.sh
 
-echo "Running Fetch Application - v1.2a.023 by Scott Fleming"
+echo "Running Fetch Application - v1.2a.023 by Scott Fleming" > $fetchLog
+
+mkdir -p $VIDEOPATH
+mkdir -p $JSONPATH
+
 
 # clear vido directory of video files
-echo "flushing video directory..."
-
 echo "$TIMESTAMP Clearning $VIDEOPATH directory..." >> $fetchLog
-rm $VIDEOPATH*
 
-echo "$TIMESTAMP Executing query for ${URL}${PI_UID}" > $fetchLog
+for i in ${VIDEOPATH}/*
+do
+  echo "deleting ${i}" >> $fetchLog
+  rm ${i}
+done
 
-/usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o $JSONPATH
+echo "$TIMESTAMP Executing query for ${URL}${PI_UID}" >> $fetchLog
+
+/usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o $JSONPATH/file.json 
+
 
 # use jq to parse array of json and load into arr
-arr=( $(jq -r '.[].youtube_id' $JSONPATH ) )
+arr=( $(jq -r '.[].youtube_id' $JSONPATH/file.json ) )
 
 # iterate array and issue youtube-dl command for the id
 for i in "${!arr[@]}"
@@ -39,7 +51,7 @@ for i in "${!arr[@]}"
         # download our video
         echo -ne " Executing youtube-dl: ${i}_${PI_UID}_${arr[$i]}.mp4...\r"
 
-        youtube-dl --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${arr[$i]} -o $VIDEOPATH${i}_${PI_UID}_${arr[$i]}.mp4
+        youtube-dl --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${arr[$i]} -o $VIDEOPATH/${i}_${PI_UID}_${arr[$i]}.mp4
     
     else
         echo "$FILE exists.. skipping"
