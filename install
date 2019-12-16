@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cd /
+echo "Installing configuration files "
+tar -xvf /home/pi/pi-tube/config.tar
+
+echo "Installing boot configuration files"
+tar -xvf /home/pi/pi-tube/booter.tar
+
+exit 0;

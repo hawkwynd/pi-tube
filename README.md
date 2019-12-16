@@ -71,7 +71,7 @@ Uncomment the line and set xserver-command -nocursor
 # Setting the desktop background
 copy default to our config dir
 
-`cp /etc/xdg/pcmanfm/LXDE-pi/autostart /home/pi/pi-tube/.config/pcmanfm/LXDE-pi/autostart`
+`cp /etc/xdg/pcmanfm/LXDE-pi/autostart /home/pi/.config/pcmanfm/LXDE-pi/autostart`
 
 Edit the configuration then set wallpaper=path/to/your/wallpaper/filename.ext (jpg or png)
 
