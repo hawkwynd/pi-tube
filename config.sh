@@ -8,4 +8,4 @@ TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`               # timestamp formatting for l
 URL="http://34.193.150.151/pi_callHome.php?id="     # url to server for requests
 AUTHOR="Scott Fleming scott@omnicommander.com"      # author
 PI_UID="OC_OMNITUBE_1"                              # ID for this PI machine
-VERSION=1.1a                                        # revision number
+VERSION=1.2                                         # revision number

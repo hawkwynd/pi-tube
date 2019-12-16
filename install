@@ -1,10 +1,63 @@
 #!/usr/bin/env bash
+# =================================
+# sudo ./install 
+# =================================
+if [ "$EUID" -ne 0 ]
+  then printf "Please run install with sudo! Exiting."
+  exit
+fi
 
+# go to root directory
 cd /
-echo "Installing configuration files "
+
+# self-update 
+echo
+while true; do
+    read -p "Can I please run my self-update?" yn
+    case $yn in
+        [Yy]* ) apt update && apt dist-upgrade -y; break;;
+        [Nn]* ) printf "\n Hey! I may not run correctly, so you had your chance and you blew it.\n"; break;;
+        * ) printf "Please answer yes or no or I will ask you again.";;
+    esac
+done
+
+echo
+
+# test for jq
+command -v jq >/dev/null 2>&1 || { 
+    printf >&2 "I require jq but it's not installed, so I am installing it now.\n"; 
+    # install jq for the json
+    apt-get install jq
+}
+# test for youtube-dl
+command -v youtube-dl >/dev/null 2>&1 || { 
+    printf >&2 "I require youtube-dl but it's not installed, so I am installing it now.\n"; 
+
+    # install youtube-dl 
+    curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+
+    # make it executable so we can run it
+    chmod a+rx /usr/local/bin/youtube-dl
+    
+}
+
+echo
+printf "Installing configuration files...\n"
 tar -xvf /home/pi/pi-tube/config.tar
-
-echo "Installing boot configuration files"
+echo
+printf "Installing boot configuration files...\n"
 tar -xvf /home/pi/pi-tube/booter.tar
+echo
 
+while true; do
+    read -p "Do you wish to set my PI_UID now?" yn
+    case $yn in
+        [Yy]* ) nano /home/pi/pi-tube/config.sh; break;;
+        [Nn]* ) printf "You can always edit the config.sh anytime.\nBye for now!"; break;;
+        * ) printf "Please answer yes or no or I will ask you again.\n";;
+    esac
+done
+
+printf "\nWell done, young Jedi Commander!\n"
+printf "The Omni-installation is now complete, kindly reboot this machine and watch the magic!\n"
 exit 0;
