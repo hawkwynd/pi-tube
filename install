@@ -10,14 +10,15 @@ fi
 # go to root directory
 cd /
 
+
 # self-update 
 echo
 while true; do
-    read -p "Can I please run my self-update?" yn
+	read -p "Can I please run my self-update? (y/n)" yn
     case $yn in
         [Yy]* ) apt update && apt dist-upgrade -y; break;;
         [Nn]* ) printf "\n Hey! I may not run correctly, so you had your chance and you blew it.\n"; break;;
-        * ) printf "Please answer yes or no or I will ask you again.";;
+        * ) printf "Please answer y or n or I will ask you again, and you don't want me wasting your time.\n.";;
     esac
 done
 
@@ -49,8 +50,12 @@ printf "Installing boot configuration files...\n"
 tar -xvf /home/pi/pi-tube/booter.tar
 echo
 
+printf "\n --- giving VLC access to run as sudo ---\n"
+sed -i 's/geteuid/getppid/' /usr/bin/vlc
+
+
 while true; do
-    read -p "Do you wish to set my PI_UID now?" yn
+	read -p "Do you wish to set my PI_UID now? (y/n)" yn
     case $yn in
         [Yy]* ) nano /home/pi/pi-tube/config.sh; break;;
         [Nn]* ) printf "You can always edit the config.sh anytime.\nBye for now!"; break;;
