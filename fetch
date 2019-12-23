@@ -4,6 +4,7 @@
 # scott@omnicommander.com
 # Video Display application 
 #=================================================================
+# apt install bc
 
 # stop vlc if it's running or frozen
 pkill -9 vlc
@@ -27,16 +28,14 @@ do
 done
 
 echo "$TIMESTAMP Executing query for ${URL}${PI_UID}" >> $fetchLog
-
 /usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o $JSONPATH/file.json 
-
 
 # use jq to parse array of json and load into arr
 arr=( $(jq -r '.[].youtube_id' $JSONPATH/file.json ) )
 
 # iterate array and issue youtube-dl command for the id
 for i in "${!arr[@]}"
-  
+ 
   do
 
     # compare if file exists, if not download it.

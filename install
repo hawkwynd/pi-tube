@@ -63,6 +63,10 @@ while true; do
     esac
 done
 
+printf "\n --- Writing cron scheduler for auto reboot at 6pm weekdays ----\n"
+crontab -l | { cat; echo "* 18 * * 1-5 reboot >/dev/null 2>&1"; } | crontab -
+
+
 printf "\nWell done, young Jedi Commander!\n"
 printf "The Omni-installation is now complete, kindly reboot this machine and watch the magic!\n"
 exit 0;
