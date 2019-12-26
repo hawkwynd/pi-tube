@@ -3,7 +3,7 @@
 # sudo ./install 
 # =================================
 if [ "$EUID" -ne 0 ]
-  then printf "Please run install with sudo! Exiting."
+  then printf "Please run install with sudo!  sudo ./install "
   exit
 fi
 
