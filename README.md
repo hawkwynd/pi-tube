@@ -33,9 +33,9 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
 
 The following happens on install: 
 
-* self-update, `apt-get upgrade -y`
-* install jq `apt-get install jq`
-* install youtube-dl 
+* performs a core self-update, `apt-get upgrade -y`
+* performs installation of jq `apt-get install jq`
+* performs installation of youtube-dl 
 
 ### Configures vlc to be run as sudo 
 `sed -i 's/geteuid/getppid/' /usr/bin/vlc`
