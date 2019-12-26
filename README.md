@@ -17,15 +17,26 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 
 During install, you will be prompted to enter the machine's ID. Be SURE you have it written down, so that you know it matches the one your customer has in TubeCommander. 
 
-The install script makes changes to the internal files within the Raspberry OS:
+###The install script makes the following changes to the internal files within the Raspberry OS:
 
 * self-update, `apt-get upgrade -y`
 * install jq `apt-get install jq`
 * install youtube-dl 
 
-### extract config.tar to respective directories
+### Configures vlc to be run as sudo 
+`sed -i 's/geteuid/getppid/' /usr/bin/vlc`
+
+### extract /home/pi/pi-tar/config.tar to respective directories
 * `home/pi/.config/lxsession/LXDE-pi/autostart`
 * `home/pi/.config/pcmanfm/LXDE-pi/desktop-items-0.conf`
 * `home/pi/.config/lxpanel/LXDE-pi/config`
+
+### extract /home/pi/pi-tube/booter.tar
+* `etc/lightdm/lightdm.conf`
+* `etc/rc.local`
+* `boot/cmdline.txt`
+
+### Edit /home/pi/pi-tube/config.sh for PI_UID
+* User enters the client Id configured in TubeCommander for customer campaign.
 
 
