@@ -2,7 +2,7 @@
 
 TITLE="OmniTube"                                    # displays on lower right corner
 LOGOPATH="/home/pi/pi-tube/img/logo.png"            # omnicommander logo image 
-JSONPATH="/home/pi/pi-tube/json"          	    # path for json file from server.
+JSONPATH="/home/pi/pi-tube/json"          	        # path for json file from server.
 VIDEOPATH="/home/pi/pi-tube/video"                  # path for fetch to store video mp4 files
 fetchLog="/home/pi/pi-tube/fetch.log"               # path for logging 
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`               # timestamp formatting for logger
