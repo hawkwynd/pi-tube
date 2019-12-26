@@ -29,6 +29,9 @@ Must be sudo to run install
 During the install, you will be prompted to enter the machine's ID. Be SURE you have it written down, so that you know it matches the one your customer has in TubeCommander. 
 
 ### The install script makes the following changes to the internal files within the Raspberry OS:
+### DO NOT RUN THESE COMMANDS 
+
+The following happens on install: 
 
 * self-update, `apt-get upgrade -y`
 * install jq `apt-get install jq`
@@ -37,24 +40,24 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
 ### Configures vlc to be run as sudo 
 `sed -i 's/geteuid/getppid/' /usr/bin/vlc`
 
-### extract /home/pi/pi-tar/config.tar to respective directories
+### extracts /home/pi/pi-tar/config.tar to respective directories
 * `home/pi/.config/lxsession/LXDE-pi/autostart`
 * `home/pi/.config/pcmanfm/LXDE-pi/desktop-items-0.conf`
 * `home/pi/.config/lxpanel/LXDE-pi/config`
 
-### extract /home/pi/pi-tube/booter.tar
+### extracts /home/pi/pi-tube/booter.tar
 * `etc/lightdm/lightdm.conf`
 * `etc/rc.local`
 * `boot/cmdline.txt`
 
-### Edit /home/pi/pi-tube/config.sh for PI_UID
+### Edits /home/pi/pi-tube/config.sh for PI_UID
 * User enters the client Id configured in TubeCommander for customer campaign.
 
 
 # Code Logic PSUEDO:
-* Cron job runs as sudo runs `/home/pi/pi-tube/fetch`
+* Cron job runs as sudo runs `/home/pi/pi-tube/fetch` every hour
  
- Fetch peforms the following:
+ Fetch application then peforms the following actions:
 
  1. Build inventory of existing videos
  2. Request payload from server and build array of videos in campaign
@@ -66,7 +69,7 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
  8. Exits gracefully until next cron call.
 
  ## Sample fetch.log entry
- fetch records to a logfile, for troubleshooting. 
+ fetch records to a logfile, for troubleshooting:  
 
  ```
  2019-12-26 15:45:01 Running Fetch Application - v1.3 by Scott Fleming
