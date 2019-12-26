@@ -55,7 +55,7 @@ sed -i 's/geteuid/getppid/' /usr/bin/vlc
 
 
 while true; do
-	read -p "Do you wish to set my PI_UID now? (y/n)" yn
+	read -p "Do you wish to set the PI_UID now? (y/n)" yn
     case $yn in
         [Yy]* ) nano /home/pi/pi-tube/config.sh; break;;
         [Nn]* ) printf "You can always edit the config.sh anytime.\nBye for now!"; break;;
@@ -64,5 +64,5 @@ while true; do
 done
 
 printf "\nWell done, young Jedi Commander!\n"
-printf "The Omni-installation is now complete, kindly reboot this machine and watch the magic!\n"
+printf "The Omni-installation is now complete. Please reboot to begin process.\n"
 exit 0;
