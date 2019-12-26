@@ -49,3 +49,19 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
 * User enters the client Id configured in TubeCommander for customer campaign.
 
 
+# Code Logic PSUEDO:
+* Cron job runs as sudo runs `/home/pi/pi-tube/fetch`
+ 
+ Fetch peforms the following:
+
+ 1. Build inventory of existing videos
+ 2. Request payload from server and build array of videos in campaign
+ 3. Compares existing inventory to array of response videos 
+ 4. Downloads videos not in inventory to /videos directory
+ 5. Deletes videos from inventory not in response videos
+ 6. Stops vlc service ( if currently running )
+ 7. Restarts vlc as service to loop videos
+ 8. Exits gracefully until next cron call.
+
+
+
