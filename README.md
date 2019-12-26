@@ -11,11 +11,11 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 
 ## Clone script from repo ( this ) 
 
-## Change to pi's home directory
+Change to pi's home directory
 
 `cd ~` 
 
-## Clone this code
+Clone this code
 
 `git clone https://github.com/omnicommander/pi-tube`
 
