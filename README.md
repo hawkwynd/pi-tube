@@ -19,8 +19,10 @@ Clone this code
 
 `git clone https://github.com/omnicommander/pi-tube`
 
-## Run Omnitube install script (must be sudo)
+## Run Omnitube install script
 `cd /home/pi/pi-tube`
+
+Must be sudo to run install 
 
 `sudo ./install`
 
