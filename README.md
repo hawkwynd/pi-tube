@@ -13,7 +13,7 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 `cd /home/pi/pi-tube`
 
 # run install script
-`./install`
+`sudo ./install`
 
 During install, you will be prompted to enter the machine's ID. Be SURE you have it written down, so that you know it matches the one your customer has in TubeCommander. 
 
