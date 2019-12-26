@@ -63,5 +63,16 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
  7. Restarts vlc as service to loop videos
  8. Exits gracefully until next cron call.
 
-
-
+ ## Sample fetch.log entry
+ Did not find any differences example:
+ ```
+ 2019-12-26 15:45:01 Running Fetch Application - v1.3 by Scott Fleming
+2019-12-26 15:45:01 Current inventory IDs: uzQ9kxs6RL8 M69uwmXb6GM X675jPEP9Fw 68cGgU2pSE0 dGStpJuIReM
+2019-12-26 15:45:01 IDs from host: uzQ9kxs6RL8 M69uwmXb6GM X675jPEP9Fw 68cGgU2pSE0 dGStpJuIReM
+2019-12-26 15:45:01 Found differences: 
+2019-12-26 15:45:01 count of inventory: 0 1 2 3 4
+2019-12-26 15:45:01 Starting at 6
+2019-12-26 15:45:01 killing VLC
+2019-12-26 15:45:01 run vlc
+2019-12-26 15:45:01 Running cvlc /home/pi/pi-tube/video OmniTube
+```
