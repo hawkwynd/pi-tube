@@ -21,9 +21,11 @@ The install script makes changes to the internal files within the Raspberry OS:
 
 * self-update, `apt-get upgrade -y`
 * install jq `apt-get install jq`
-* install youtub-dl 
-* extract config.tar to respective directories
-** `home/pi/.config/lxsession/LXDE-pi/autostart`
-** `home/pi/.config/pcmanfm/LXDE-pi/desktop-items-0.conf`
-** `home/pi/.config/lxpanel/LXDE-pi/config`
+* install youtube-dl 
+
+### extract config.tar to respective directories
+* `home/pi/.config/lxsession/LXDE-pi/autostart`
+* `home/pi/.config/pcmanfm/LXDE-pi/desktop-items-0.conf`
+* `home/pi/.config/lxpanel/LXDE-pi/config`
+
 
