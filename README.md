@@ -9,6 +9,16 @@ https://www.raspberrypi.org/downloads/
 https://www.raspberrypi.org/documentation/installation/noobs.md
 
 
+## Clone script from repo ( this ) 
+
+##Change to pi's home directory
+
+`cd ~` 
+
+##Clone this code
+
+`git clone https://github.com/omnicommander/pi-tube`
+
 ## Run Omnitube install script (must be sudo)
 `cd /home/pi/pi-tube`
 
