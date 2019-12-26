@@ -64,7 +64,8 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
  8. Exits gracefully until next cron call.
 
  ## Sample fetch.log entry
- Did not find any differences example:
+ fetch records to a logfile, for troubleshooting. 
+
  ```
  2019-12-26 15:45:01 Running Fetch Application - v1.3 by Scott Fleming
 2019-12-26 15:45:01 Current inventory IDs: uzQ9kxs6RL8 M69uwmXb6GM X675jPEP9Fw 68cGgU2pSE0 dGStpJuIReM
@@ -76,3 +77,9 @@ During the install, you will be prompted to enter the machine's ID. Be SURE you 
 2019-12-26 15:45:01 run vlc
 2019-12-26 15:45:01 Running cvlc /home/pi/pi-tube/video OmniTube
 ```
+
+## TODO - 12/26/19
+* Push function to send logfile back to server for capture.
+* Realtime capture of CPU utilization, RAM and temperature.
+* Error trapping functions so fallible items can be dealt with. 
+
