@@ -17,7 +17,8 @@ https://www.raspberrypi.org/documentation/installation/noobs.md
 
 During install, you will be prompted to enter the machine's ID. Be SURE you have it written down, so that you know it matches the one your customer has in TubeCommander. 
 
-###The install script makes the following changes to the internal files within the Raspberry OS:
+### The install script makes the following changes to the internal files within the Raspberry OS:
+
 
 * self-update, `apt-get upgrade -y`
 * install jq `apt-get install jq`
