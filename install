@@ -10,7 +10,6 @@ fi
 # go to root directory
 cd /
 
-
 # self-update 
 echo
 while true; do
@@ -53,7 +52,6 @@ echo
 printf "\n --- giving VLC access to run as sudo ---\n"
 sed -i 's/geteuid/getppid/' /usr/bin/vlc
 
-
 while true; do
 	read -p "Do you wish to set the PI_UID now? (y/n)" yn
     case $yn in
@@ -63,7 +61,7 @@ while true; do
     esac
 done
 
-# Configure WIFI SSID and Password
+# Configure WIFI SSID and Password (sudo)
 printf 
 read -p "Enter WIFI SSID: " SSID
 read -p "Enter WIFI PASSWORD: " PASSWORD
@@ -75,8 +73,17 @@ printf "country=\"US\"\n\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
 printf "network={\nssid=\"${SSID}\"\npsk=\"${PASSWORD}\"\nkey_mgmt=WPA-PSK\n}\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
 
 
-# configure cron for boot to run 
+# configure cron for boot to run as pi
+# change to pi user for the following EOF
+sudo -i -u pi bash << EOF
+    crontab -l > mycron
+    echo "@reboot /home/pi/pi-tube/fetch" >> mycron
+    echo "* */6 * * * /home/pi/pi-tube/fetch" >> mycron
 
+    # install new cron file
+    crontab mycron
+    rm mycron
+EOF
 
 # exit out
 printf "\nWell done, young Jedi Commander!\n"
