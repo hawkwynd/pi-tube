@@ -63,6 +63,22 @@ while true; do
     esac
 done
 
+# Configure WIFI SSID and Password
+printf 
+read -p "Enter WIFI SSID: " SSID
+read -p "Enter WIFI PASSWORD: " PASSWORD
+
+# overwrite existing wpa configuration file
+printf "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n" > /etc/wpa_supplicant/wpa_supplicant.conf
+printf "update_config=1\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
+printf "country=\"US\"\n\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
+printf "network={\nssid=\"${SSID}\"\npsk=\"${PASSWORD}\"\nkey_mgmt=WPA-PSK\n}\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
+
+
+# configure cron for boot to run 
+
+
+# exit out
 printf "\nWell done, young Jedi Commander!\n"
 printf "The Omni-installation is now complete. Please reboot to begin process.\n"
 exit 0;
