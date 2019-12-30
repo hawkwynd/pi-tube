@@ -3,7 +3,7 @@
 # sudo ./install 
 # =================================
 if [ "$EUID" -ne 0 ]
-  then printf "Please run install with sudo! Exiting."
+  then printf "Please run install with sudo!  sudo ./install "
   exit
 fi
 
@@ -55,7 +55,7 @@ sed -i 's/geteuid/getppid/' /usr/bin/vlc
 
 
 while true; do
-	read -p "Do you wish to set my PI_UID now? (y/n)" yn
+	read -p "Do you wish to set the PI_UID now? (y/n)" yn
     case $yn in
         [Yy]* ) nano /home/pi/pi-tube/config.sh; break;;
         [Nn]* ) printf "You can always edit the config.sh anytime.\nBye for now!"; break;;
@@ -63,10 +63,22 @@ while true; do
     esac
 done
 
-printf "\n --- Writing cron scheduler for auto reboot at 6pm weekdays ----\n"
-crontab -l | { cat; echo "* 18 * * 1-5 reboot >/dev/null 2>&1"; } | crontab -
+# Configure WIFI SSID and Password
+printf 
+read -p "Enter WIFI SSID: " SSID
+read -p "Enter WIFI PASSWORD: " PASSWORD
+
+# overwrite existing wpa configuration file
+printf "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n" > /etc/wpa_supplicant/wpa_supplicant.conf
+printf "update_config=1\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
+printf "country=\"US\"\n\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
+printf "network={\nssid=\"${SSID}\"\npsk=\"${PASSWORD}\"\nkey_mgmt=WPA-PSK\n}\n" >> /etc/wpa_supplicant/wpa_supplicant.conf
 
 
+# configure cron for boot to run 
+
+
+# exit out
 printf "\nWell done, young Jedi Commander!\n"
-printf "The Omni-installation is now complete, kindly reboot this machine and watch the magic!\n"
+printf "The Omni-installation is now complete. Please reboot to begin process.\n"
 exit 0;

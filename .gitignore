@@ -1,4 +1,4 @@
 video/
 json/
-fetch.log
-.swp
+*.log
+.vscode/
