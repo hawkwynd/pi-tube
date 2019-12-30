@@ -23,13 +23,13 @@ while [ 1 ]
 
     if [ $? -eq 0 ] ; then
         if [ "$INTERNET_STATUS" != "UP" ]; then
-            printf "INTERNET UP $TIMESTAMP \n" >> $fetchLog ;
+            printf "$TIMESTAMP INTERNET UP $TIMESTAMP \n" >> $fetchLog ;
             INTERNET_STATUS="UP"
             break;
         fi
     else
         if [ "$INTERNET_STATUS" = "UP" ]; then
-            printf "INTERNET DOWN $TIMESTAMP \n" >> $fetchLog;
+            printf "$TMESTAMP INTERNET DOWN $TIMESTAMP \n" >> $fetchLog;
             INTERNET_STATUS="DOWN"
         fi
     fi
@@ -47,14 +47,21 @@ for file in ${VIDEOPATH}/*; do
 done
 
 # Call home for json array of youtube video ids
-printf "$TIMESTAMP Current inventory IDs: ${inventory[@]}" >> $fetchLog
+printf "$TIMESTAMP Current inventory IDs:\n" >> $fetchLog
+for x in ${inventory[@]}; do
+    printf "\t$x\n" >> $fetchLog
+done
 
 /usr/bin/curl -s -H "Content-Type: application/json" -X GET "$URL$PI_UID" -o $JSONPATH/file.json 
 
 # use jq to parse array of json and load into arr
 arr=( $(jq -r '.[].youtube_id' $JSONPATH/file.json ) )
 
-echo "$TIMESTAMP IDs from host: ${arr[@]}" >> $fetchLog
+printf "$TIMESTAMP IDs from host:\n" >> $fetchLog
+for z in  ${arr[@]}; do
+    printf "\t$z\n" >> $fetchLog
+done
+
 
 # compare inventory with arr of youtube ids we just got from server
 diff=()
@@ -67,14 +74,14 @@ for i in "${arr[@]}"; do
     [[ -n $skip ]] || diff+=("$i")
 done
 
-echo "$TIMESTAMP Found differences: ${diff[@]}" >> $fetchLog
-echo "$TIMESTAMP count of inventory: ${inventory[@]}" >> $fetchLog
+echo "$TIMESTAMP Found differences: ${!diff[@]}" >> $fetchLog
 
 # get our starting increment number
 for counter in "${!inventory[@]}"; do 
     start=$counter
 done
 start=$(expr $start + 2)
+
 echo "$TIMESTAMP Starting at $start" >> $fetchLog
 
 # iterate diff array and issue youtube-dl command for the id's 
@@ -84,8 +91,9 @@ for i in "${!diff[@]}"
            
         # download our video
         echo "$TIMESTAMP executed: youtube-dl: ${start}_${PI_UID}_${diff[$i]}.mp4" >> $fetchLog
-
-        youtube-dl --no-mtime --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${diff[$i]} -o $VIDEOPATH/${start}_${PI_UID}_${diff[$i]}.mp4
+        
+        # --no-warnings --ignore-errors 
+        /usr/local/bin/youtube-dl --no-mtime --format mp4  --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${diff[$i]} -o $VIDEOPATH/${start}_${PI_UID}_${diff[$i]}.mp4
 
         # increment counter 
         start=$(expr $start + 1)
@@ -117,10 +125,11 @@ echo "$TIMESTAMP pkill -9 vlc" >> $fetchLog
 pkill -9 vlc
 
 # Run the looper script
-echo "$TIMESTAMP Restarting VLC" >> $fetchLog
+echo "$TIMESTAMP Start vlc" >> $fetchLog
 
 # Fire the weapon
 /home/pi/pi-tube/looper &
 
-echo "$TIMESTAMP exiting fetch" >> $fetchLog
+echo "$TIMESTAMP Bye" >> $fetchLog
+echo >> $fetchLog
 exit 0;
