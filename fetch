@@ -10,38 +10,31 @@ source /home/pi/pi-tube/config.sh
 
 printf "$TIMESTAMP Running Fetch Application - v1.3 by Scott Fleming\n" >> $fetchLog
 
+# create directories, if not already there
 mkdir -p $VIDEOPATH
 mkdir -p $JSONPATH
 
 # Make sure we're online. if not, wait for wifi to connect.
 INTERNET_STATUS="UNKNOWN"
-TIMESTAMP=`date +%s`
+# TIMESTAMP=`date +%s`
 while [ 1 ]
  do
     ping -c 1 -W 0.7 8.8.4.4 > /dev/null 2>&1
 
     if [ $? -eq 0 ] ; then
         if [ "$INTERNET_STATUS" != "UP" ]; then
-            printf "INTERNET UP   `date +%Y-%m-%dT%H:%M:%S%Z` $((`date +%s`-$TIMESTAMP))\n" >> $fetchLog ;
+            printf "INTERNET UP $TIMESTAMP \n" >> $fetchLog ;
             INTERNET_STATUS="UP"
             break;
         fi
     else
         if [ "$INTERNET_STATUS" = "UP" ]; then
-            printf "INTERNET DOWN `date +%Y-%m-%dT%H:%M:%S%Z` $((`date +%s`-$TIMESTAMP))" >> $fetchLog;
+            printf "INTERNET DOWN $TIMESTAMP \n" >> $fetchLog;
             INTERNET_STATUS="DOWN"
         fi
     fi
     sleep 1
  done;
-
-# # test for echo
-# if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-#   printf "*** IPv4 is up!*** \n\n" >> $fetchLog
-# else
-#   printf "IPv4 is down! Please check the WIFI connection and reboot.\n" >> $fetchLog
-#   exit 0;
-# fi
 
 # Since we have internet access, let us proceed 
 
@@ -61,7 +54,7 @@ printf "$TIMESTAMP Current inventory IDs: ${inventory[@]}" >> $fetchLog
 # use jq to parse array of json and load into arr
 arr=( $(jq -r '.[].youtube_id' $JSONPATH/file.json ) )
 
-printf "$TIMESTAMP IDs from host: ${arr[@]}" >> $fetchLog
+echo "$TIMESTAMP IDs from host: ${arr[@]}" >> $fetchLog
 
 # compare inventory with arr of youtube ids we just got from server
 diff=()
@@ -74,15 +67,15 @@ for i in "${arr[@]}"; do
     [[ -n $skip ]] || diff+=("$i")
 done
 
-printf "\n$TIMESTAMP Found differences: ${!diff[@]}" >> $fetchLog
-printf "\n$TIMESTAMP count of inventory: ${!inventory[@]}" >> $fetchLog
+echo "$TIMESTAMP Found differences: ${diff[@]}" >> $fetchLog
+echo "$TIMESTAMP count of inventory: ${inventory[@]}" >> $fetchLog
 
 # get our starting increment number
 for counter in "${!inventory[@]}"; do 
     start=$counter
 done
 start=$(expr $start + 2)
-printf "\n$TIMESTAMP Starting at $start" >> $fetchLog
+echo "$TIMESTAMP Starting at $start" >> $fetchLog
 
 # iterate diff array and issue youtube-dl command for the id's 
 # 
@@ -90,7 +83,7 @@ for i in "${!diff[@]}"
   do
            
         # download our video
-        printf "\n$TIMESTAMP executed: youtube-dl: ${start}_${PI_UID}_${diff[$i]}.mp4\n" >> $fetchLog
+        echo "$TIMESTAMP executed: youtube-dl: ${start}_${PI_UID}_${diff[$i]}.mp4" >> $fetchLog
 
         youtube-dl --no-mtime --format mp4 --no-warnings --ignore-errors --ignore-config --prefer-ffmpeg https://www.youtube.com/watch?v=${diff[$i]} -o $VIDEOPATH/${start}_${PI_UID}_${diff[$i]}.mp4
 
@@ -98,10 +91,6 @@ for i in "${!diff[@]}"
         start=$(expr $start + 1)
    
 done
-
-# List out the videos we downloaded
-printf "\nVideo directory: \n"
-find /home/pi/pi-tube/video -name '*.*' >> $fetchLog
 
 # compare when finished to clean up files which are no longer in arr.
 # ===================================================================
@@ -117,21 +106,21 @@ done
 
 # Iterate Array3 and remove these files
 for d in "${Array3[@]}"; do
-    printf "\n$TIMESTAMP deleteing ${VIDEOPATH}/ like *${d}*\n" >> $fetchLog
+    echo "$TIMESTAMP deleteing ${VIDEOPATH}/ like *${d}*" >> $fetchLog
     find "${VIDEOPATH}/" -name "*${d}*" -type f -exec rm {} +
 done
 
 
 # stop vlc if it's running or frozen
-printf "$TIMESTAMP pkill -9 vlc \n" >> $fetchLog
+echo "$TIMESTAMP pkill -9 vlc" >> $fetchLog
 
 pkill -9 vlc
 
 # Run the looper script
-printf "$TIMESTAMP Restarting VLC\n" >> $fetchLog
+echo "$TIMESTAMP Restarting VLC" >> $fetchLog
 
 # Fire the weapon
 /home/pi/pi-tube/looper &
 
-printf "$TIMESTAMP exiting fetch\n" >> $fetchLog
+echo "$TIMESTAMP exiting fetch" >> $fetchLog
 exit 0;
