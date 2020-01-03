@@ -76,9 +76,12 @@ printf "network={\nssid=\"${SSID}\"\npsk=\"${PASSWORD}\"\nkey_mgmt=WPA-PSK\n}\n"
 # configure cron for boot to run as pi
 # change to pi user for the following EOF
 sudo -i -u pi bash << EOF
-    crontab -l > mycron
-    echo "@reboot /home/pi/pi-tube/fetch" >> mycron
-    echo "* */6 * * * /home/pi/pi-tube/fetch" >> mycron
+    # export current crontab to mycron
+    crontab -l > mycron_old
+    
+    # write new mycron
+    echo "@reboot /home/pi/pi-tube/fetch && date +\%Y-\%m-\%d\ \%H:\%M:\%S > /home/pi/pi-tube/last_cron && /home/pi/pi-tube/push" > mycron
+    echo "*/15 * * * * /home/pi/pi-tube/fetch && date +\%Y-\%m-\%d\ \%H:\%M:\%S > /home/pi/pi-tube/last_cron && /home/pi/pi-tube/push" >> mycron
 
     # install new cron file
     crontab mycron
