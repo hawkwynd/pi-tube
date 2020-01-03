@@ -14,6 +14,8 @@ source /home/pi/pi-tube/config.sh
         # --no-video-title-show : Do not display the video title
         # --no-random : Play in the order they are listed in the directory
 	    # --no-audio : Do not play audio option
+        # --file-logging : record logs on
+        # --logfile=vlc-log.txt : location of logfile
         # =================================================================
         # sub-source parameters: 
         # position: {0 (Center), 1 (Left), 2 (Right), 4 (Top), 8 (Bottom), 5 (Top-Left), 6 (Top-Right), 9 (Bottom-Left), 10 (Bottom-Right)} 
