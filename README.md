@@ -1,6 +1,6 @@
 
 # Omnitube for Raspberry PI 
-December 2019 -- Scott Fleming scott@omnicommander.com
+December 2019
 
 ## Download NOObs for new PI Raspian
 https://www.raspberrypi.org/downloads/
